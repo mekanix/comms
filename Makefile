@@ -22,6 +22,24 @@ all: fetch setup
 	@${MAKE} ${MAKEFLAGS} -C projects/webmail sync_static
 .endif
 
+up: fetch setup
+.if defined(jail)
+	@echo "=== ${jail} ==="
+	@${MAKE} ${MAKEFLAGS} -C projects/${jail} up
+.else
+	@echo "=== mail ==="
+	@${MAKE} ${MAKEFLAGS} -C projects/mail up
+	@echo
+	@echo "=== web ==="
+	@${MAKE} ${MAKEFLAGS} -C projects/web up
+	@echo
+	@echo "=== webmail ==="
+	@${MAKE} ${MAKEFLAGS} -C projects/webmail up
+	@${MAKE} ${MAKEFLAGS} -C projects/webmail web up
+	@${MAKE} ${MAKEFLAGS} -C projects/webmail sync_static up
+.endif
+
+
 init:
 .if !exists(projects)
 	@mkdir projects
