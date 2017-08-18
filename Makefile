@@ -46,6 +46,7 @@ init:
 .endif
 
 fetch:
+	@${MAKE} ${MAKEFLAGS} SUBPROJECT=letsencrypt fetch_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=mail fetch_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=web fetch_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=webmail fetch_subproject
@@ -56,6 +57,7 @@ fetch_subproject: init
 .endif
 
 setup:
+	@${MAKE} ${MAKEFLAGS} SUBPROJECT=letsencrypt setup_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=mail setup_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=web setup_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=webmail setup_subproject
@@ -66,9 +68,6 @@ setup_subproject: fetch
 	@echo "STAGE=${STAGE}" >>projects/${SUBPROJECT}/vars.mk
 	@echo ".endif" >>projects/${SUBPROJECT}/vars.mk
 	@echo "" >>projects/${SUBPROJECT}/vars.mk
-	@echo ".if !defined(DOMAIN)" >>projects/${SUBPROJECT}/vars.mk
-	@echo "DOMAIN=${DOMAIN}" >>projects/${SUBPROJECT}/vars.mk
-	@echo ".endif" >>projects/${SUBPROJECT}/vars.mk
 	@echo "" >>projects/${SUBPROJECT}/vars.mk
 	@echo ".if !defined(UID)" >>projects/${SUBPROJECT}/vars.mk
 	@echo "UID=${UID}" >>projects/${SUBPROJECT}/vars.mk
@@ -83,9 +82,10 @@ destroy: down
 .if defined(jail)
 	@${MAKE} ${MAKEFLAGS} -C projects/${jail} destroy
 .else
-	@${MAKE} ${MAKEFLAGS} -C projects/mail destroy
 	@${MAKE} ${MAKEFLAGS} -C projects/web destroy
 	@${MAKE} ${MAKEFLAGS} -C projects/webmail destroy
+	@${MAKE} ${MAKEFLAGS} -C projects/mail destroy
+	@${MAKE} ${MAKEFLAGS} -C projects/letsencrypt destroy
 .endif
 
 login:
@@ -95,7 +95,8 @@ down: setup
 .if defined(jail)
 	@${MAKE} ${MAKEFLAGS} -C projects/${jail} down
 .else
-	@${MAKE} ${MAKEFLAGS} -C projects/mail down
 	@${MAKE} ${MAKEFLAGS} -C projects/web down
 	@${MAKE} ${MAKEFLAGS} -C projects/webmail down
+	@${MAKE} ${MAKEFLAGS} -C projects/mail down
+	@${MAKE} ${MAKEFLAGS} -C projects/letsencrypt down
 .endif
