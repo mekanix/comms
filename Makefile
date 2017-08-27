@@ -10,6 +10,12 @@ all: fetch setup
 	@echo "=== ${jail} ==="
 	@${MAKE} ${MAKEFLAGS} -C projects/${jail}
 .else
+	@echo "=== letsencrypt ==="
+	@${MAKE} ${MAKEFLAGS} -C projects/letsencrypt
+	@echo
+	@echo "=== ldap ==="
+	@${MAKE} ${MAKEFLAGS} -C projects/ldap
+	@echo
 	@echo "=== mail ==="
 	@${MAKE} ${MAKEFLAGS} -C projects/mail
 	@echo
@@ -27,6 +33,12 @@ up: fetch setup
 	@echo "=== ${jail} ==="
 	@${MAKE} ${MAKEFLAGS} -C projects/${jail} up
 .else
+	@echo "=== letsencrypt ==="
+	@${MAKE} ${MAKEFLAGS} -C projects/letsencrypt up
+	@echo
+	@echo "=== ldap ==="
+	@${MAKE} ${MAKEFLAGS} -C projects/ldap up
+	@echo
 	@echo "=== mail ==="
 	@${MAKE} ${MAKEFLAGS} -C projects/mail up
 	@echo
@@ -47,6 +59,7 @@ init:
 
 fetch:
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=letsencrypt fetch_subproject
+	@${MAKE} ${MAKEFLAGS} SUBPROJECT=ldap fetch_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=mail fetch_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=web fetch_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=webmail fetch_subproject
@@ -58,6 +71,7 @@ fetch_subproject: init
 
 setup:
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=letsencrypt setup_subproject
+	@${MAKE} ${MAKEFLAGS} SUBPROJECT=ldap setup_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=mail setup_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=web setup_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=webmail setup_subproject
@@ -85,6 +99,7 @@ destroy: down
 	@${MAKE} ${MAKEFLAGS} -C projects/web destroy
 	@${MAKE} ${MAKEFLAGS} -C projects/webmail destroy
 	@${MAKE} ${MAKEFLAGS} -C projects/mail destroy
+	@${MAKE} ${MAKEFLAGS} -C projects/ldap destroy
 	@${MAKE} ${MAKEFLAGS} -C projects/letsencrypt destroy
 .endif
 
@@ -98,5 +113,6 @@ down: setup
 	@${MAKE} ${MAKEFLAGS} -C projects/web down
 	@${MAKE} ${MAKEFLAGS} -C projects/webmail down
 	@${MAKE} ${MAKEFLAGS} -C projects/mail down
+	@${MAKE} ${MAKEFLAGS} -C projects/ldap down
 	@${MAKE} ${MAKEFLAGS} -C projects/letsencrypt down
 .endif
