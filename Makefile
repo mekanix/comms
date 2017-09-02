@@ -19,13 +19,14 @@ all: fetch setup
 	@echo "=== mail ==="
 	@${MAKE} ${MAKEFLAGS} -C projects/mail
 	@echo
+	@echo "=== webmail ==="
+	@${MAKE} ${MAKEFLAGS} -C projects/webmail
+	@echo
 	@echo "=== web ==="
 	@${MAKE} ${MAKEFLAGS} -C projects/web
 	@echo
-	@echo "=== webmail ==="
-	@${MAKE} ${MAKEFLAGS} -C projects/webmail
-	@${MAKE} ${MAKEFLAGS} -C projects/webmail web
-	@${MAKE} ${MAKEFLAGS} -C projects/webmail sync_static
+	@echo "=== webconsul ==="
+	@${MAKE} ${MAKEFLAGS} -C projects/webconsul
 .endif
 
 up: fetch setup
@@ -42,13 +43,14 @@ up: fetch setup
 	@echo "=== mail ==="
 	@${MAKE} ${MAKEFLAGS} -C projects/mail up
 	@echo
+	@echo "=== webmail ==="
+	@${MAKE} ${MAKEFLAGS} -C projects/webmail up
+	@echo
 	@echo "=== web ==="
 	@${MAKE} ${MAKEFLAGS} -C projects/web up
 	@echo
-	@echo "=== webmail ==="
-	@${MAKE} ${MAKEFLAGS} -C projects/webmail up
-	@${MAKE} ${MAKEFLAGS} -C projects/webmail web up
-	@${MAKE} ${MAKEFLAGS} -C projects/webmail sync_static up
+	@echo "=== webconsul ==="
+	@${MAKE} ${MAKEFLAGS} -C projects/webconsul up
 .endif
 
 
@@ -63,6 +65,7 @@ fetch:
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=mail fetch_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=web fetch_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=webmail fetch_subproject
+	@${MAKE} ${MAKEFLAGS} SUBPROJECT=webconsul fetch_subproject
 
 fetch_subproject: init
 .if !exists(projects/${SUBPROJECT})
@@ -75,6 +78,7 @@ setup:
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=mail setup_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=web setup_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=webmail setup_subproject
+	@${MAKE} ${MAKEFLAGS} SUBPROJECT=webconsul setup_subproject
 
 setup_subproject: fetch
 	@rm -f projects/${SUBPROJECT}/vars.mk
@@ -92,10 +96,11 @@ setup_subproject: fetch
 	@echo ".endif" >>projects/${SUBPROJECT}/vars.mk
 	@echo "" >>projects/${SUBPROJECT}/vars.mk
 
-destroy: down
+destroy:
 .if defined(jail)
 	@${MAKE} ${MAKEFLAGS} -C projects/${jail} destroy
 .else
+	@${MAKE} ${MAKEFLAGS} -C projects/webconsul destroy
 	@${MAKE} ${MAKEFLAGS} -C projects/web destroy
 	@${MAKE} ${MAKEFLAGS} -C projects/webmail destroy
 	@${MAKE} ${MAKEFLAGS} -C projects/mail destroy
@@ -110,6 +115,7 @@ down: setup
 .if defined(jail)
 	@${MAKE} ${MAKEFLAGS} -C projects/${jail} down
 .else
+	@${MAKE} ${MAKEFLAGS} -C projects/webconsul down
 	@${MAKE} ${MAKEFLAGS} -C projects/web down
 	@${MAKE} ${MAKEFLAGS} -C projects/webmail down
 	@${MAKE} ${MAKEFLAGS} -C projects/mail down
