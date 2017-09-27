@@ -19,6 +19,9 @@ all: fetch setup
 	@echo "=== mail ==="
 	@${MAKE} ${MAKEFLAGS} -C projects/mail
 	@echo
+	@echo "=== jabber ==="
+	@${MAKE} ${MAKEFLAGS} -C projects/jabber
+	@echo
 	@echo "=== webmail ==="
 	@${MAKE} ${MAKEFLAGS} -C projects/webmail
 	@echo
@@ -43,6 +46,9 @@ up: fetch setup
 	@echo "=== mail ==="
 	@${MAKE} ${MAKEFLAGS} -C projects/mail up
 	@echo
+	@echo "=== jabber ==="
+	@${MAKE} ${MAKEFLAGS} -C projects/jabber up
+	@echo
 	@echo "=== webmail ==="
 	@${MAKE} ${MAKEFLAGS} -C projects/webmail up
 	@echo
@@ -63,6 +69,7 @@ fetch:
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=letsencrypt fetch_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=ldap fetch_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=mail fetch_subproject
+	@${MAKE} ${MAKEFLAGS} SUBPROJECT=jabber fetch_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=web fetch_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=webmail fetch_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=webconsul fetch_subproject
@@ -76,6 +83,7 @@ setup:
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=letsencrypt setup_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=ldap setup_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=mail setup_subproject
+	@${MAKE} ${MAKEFLAGS} SUBPROJECT=jabber setup_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=web setup_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=webmail setup_subproject
 	@${MAKE} ${MAKEFLAGS} SUBPROJECT=webconsul setup_subproject
@@ -103,6 +111,7 @@ destroy:
 	@${MAKE} ${MAKEFLAGS} -C projects/webconsul destroy
 	@${MAKE} ${MAKEFLAGS} -C projects/web destroy
 	@${MAKE} ${MAKEFLAGS} -C projects/webmail destroy
+	@${MAKE} ${MAKEFLAGS} -C projects/jabber destroy
 	@${MAKE} ${MAKEFLAGS} -C projects/mail destroy
 	@${MAKE} ${MAKEFLAGS} -C projects/ldap destroy
 	@${MAKE} ${MAKEFLAGS} -C projects/letsencrypt destroy
@@ -118,6 +127,7 @@ down: setup
 	@${MAKE} ${MAKEFLAGS} -C projects/webconsul down
 	@${MAKE} ${MAKEFLAGS} -C projects/web down
 	@${MAKE} ${MAKEFLAGS} -C projects/webmail down
+	@${MAKE} ${MAKEFLAGS} -C projects/jabber down
 	@${MAKE} ${MAKEFLAGS} -C projects/mail down
 	@${MAKE} ${MAKEFLAGS} -C projects/ldap down
 	@${MAKE} ${MAKEFLAGS} -C projects/letsencrypt down
