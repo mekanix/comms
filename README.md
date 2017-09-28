@@ -1,6 +1,8 @@
 # mail
 
 Required consul keys:
+* jabber/dhparams
+* jabber/\<domain>/enabled
 * ldap/admin/password
 * letsencrypt/lists.\<domain>/email
 * letsencrypt/lists.\<domain>/provider
