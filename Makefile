@@ -14,9 +14,9 @@ SERVICES = letsencrypt \
 
 
 all: fetch setup
-.if defined(jail)
-	@echo "=== ${jail} ==="
-	@${MAKE} ${MAKEFLAGS} -C services/${jail}
+.if defined(service)
+	@echo "=== ${service} ==="
+	@${MAKE} ${MAKEFLAGS} -C services/${service}
 .else
 .for service in ${SERVICES}
 	@echo "=== ${service} ==="
@@ -25,9 +25,9 @@ all: fetch setup
 .endif
 
 up: fetch setup
-.if defined(jail)
-	@echo "=== ${jail} ==="
-	@${MAKE} ${MAKEFLAGS} -C services/${jail} up
+.if defined(service)
+	@echo "=== ${service} ==="
+	@${MAKE} ${MAKEFLAGS} -C services/${service} up
 .else
 .for service in ${SERVICES}
 	@echo "=== ${service} ==="
@@ -67,8 +67,8 @@ setup:
 .endfor
 
 destroy:
-.if defined(jail)
-	@${MAKE} ${MAKEFLAGS} -C services/${jail} destroy
+.if defined(service)
+	@${MAKE} ${MAKEFLAGS} -C services/${service} destroy
 .else
 .for service in ${SERVICES}
 	@${MAKE} ${MAKEFLAGS} -C services/${service} destroy
@@ -76,11 +76,11 @@ destroy:
 .endif
 
 login:
-	@${MAKE} ${MAKEFLAGS} -C services/${jail} login
+	@${MAKE} ${MAKEFLAGS} -C services/${service} login
 
 down: setup
-.if defined(jail)
-	@${MAKE} ${MAKEFLAGS} -C services/${jail} down
+.if defined(service)
+	@${MAKE} ${MAKEFLAGS} -C services/${service} down
 .else
 .for service in ${SERVICES}
 	@${MAKE} ${MAKEFLAGS} -C services/${service} down
