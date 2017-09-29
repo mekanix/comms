@@ -5,5 +5,6 @@ SERVICES = letsencrypt https://github.com/mekanix/jail-letsencrypt \
 	   webmail https://github.com/mekanix/jail-webmail \
 	   web https://github.com/mekanix/jail-web \
 	   webconsul https://github.com/mekanix/jail-webconsul
+DOMAIN=lust4trust.com
 
 .include <include.mk>
