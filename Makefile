@@ -1,3 +1,4 @@
+REGGAE_PATH = /usr/local/share/reggae
 SERVICES = letsencrypt https://github.com/mekanix/jail-letsencrypt \
 	   ldap https://github.com/mekanix/jail-ldap \
 	   mail https://github.com/mekanix/jail-mail \
@@ -7,4 +8,4 @@ SERVICES = letsencrypt https://github.com/mekanix/jail-letsencrypt \
 	   webconsul https://github.com/mekanix/jail-webconsul
 DOMAIN=lust4trust.com
 
-.include <include.mk>
+.include <${REGGAE_PATH}/mk/project.mk>
