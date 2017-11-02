@@ -14,5 +14,10 @@ Required consul keys:
 * letsencrypt/mail.\<domain>/token
 * letsencrypt/mail.\<domain>/upstream
 * letsencrypt/mail.\<domain>/upstream_type
+* letsencrypt/\<domain>/email
+* letsencrypt/\<domain>/provider
+* letsencrypt/\<domain>/token
+* letsencrypt/\<domain>/upstream
+* letsencrypt/\<domain>/upstream_type
 * mail/domain
 * mail/dkim/key
