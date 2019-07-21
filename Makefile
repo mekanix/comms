@@ -1,5 +1,5 @@
 REGGAE_PATH = /usr/local/share/reggae
-DOMAIN ?= example.com
+FQDN ?= example.com
 SERVICES = letsencrypt https://github.com/mekanix/jail-letsencrypt \
 	   ldap https://github.com/mekanix/jail-ldap \
 	   mail https://github.com/mekanix/jail-mail \
@@ -8,6 +8,8 @@ SERVICES = letsencrypt https://github.com/mekanix/jail-letsencrypt \
 	   nginx https://github.com/mekanix/jail-nginx
 
 pre_up:
-	echo ${DOMAIN}
+.for service url in ${SERVICES}
+	@echo "FQDN ?= ${FQDN}" >>services/${service}/vars.mk
+.endfor
 
 .include <${REGGAE_PATH}/mk/project.mk>
