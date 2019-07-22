@@ -12,4 +12,7 @@ pre_up:
 	@echo "FQDN ?= ${FQDN}" >>services/${service}/vars.mk
 .endfor
 
+cron:
+	@sudo bin/cron.sh
+
 .include <${REGGAE_PATH}/mk/project.mk>
