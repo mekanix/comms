@@ -7,10 +7,13 @@ SERVICES = letsencrypt https://github.com/mekanix/jail-letsencrypt \
 	   webmail https://github.com/mekanix/jail-webmail \
 	   nginx https://github.com/mekanix/jail-nginx
 
-pre_up:
+post_setup:
 .for service url in ${SERVICES}
 	@echo "FQDN ?= ${FQDN}" >>services/${service}/vars.mk
 .endfor
+	@echo "/usr/cbsd/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/nginx/templates/fstab
+	@echo "/usr/cbsd/jails-data/webmail-data/usr/local/www/rainloop /usr/local/www/rainloop nullfs rw 0 0" >>services/nginx/templates/fstab
+	@echo "/usr/cbsd/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/jabber/templates/fstab
 
 cron:
 	@sudo bin/cron.sh
