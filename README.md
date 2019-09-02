@@ -31,7 +31,7 @@ ldappasswd -W -D cn=root,dc=ldap uid=beastie,ou=mydomain.com,dc=ldap
 ```
 
 If you want to test it on your local machine, run this as root:
-
+            
 ```
 echo `cbsd jget jname=mail ip4_addr | cut -f 2 -d ' '` imap.mydomain.com smtp.mydomain.com >>/etc/hosts
 echo `cbsd jget jname=jabber ip4_addr | cut -f 2 -d ' '` mydomain.com >>/etc/hosts
@@ -39,3 +39,21 @@ echo `cbsd jget jname=nginx ip4_addr | cut -f 2 -d ' '` mail.mydomain.com >>/etc
 ```
 
 Visit https://mail.mydomain.com?admin and use admin/12345 as user/pass.
+
+## DNS Setup
+| Type  | Record                 | Value                                             |
+|------:|:----------------------:|:--------------------------------------------------|
+| A     | comms                  | IP                                                |
+| CNAME | lists                  | comms.example.com                                 |
+| CNAME | smtp                   | comms.example.com                                 |
+| CNAME | imap                   | comms.example.com                                 |
+| CNAME | conference             | comms.example.com                                 |
+| CNAME | mail                   | comms.example.com                                 |
+| SRV   | \_xmpp-client.\_tcp    | 0 5222 comms.example.com                          |
+| SRV   | \_xmpp-server.\_tcp    | 0 5269 comms.example.com                          |
+| TXT	  | lists                  | "v=spf1 mx ip4:IP include:lists.example.com -all" |
+| TXT   |                        | "v=spf1 mx ip4:IP include:example.com -all"       |
+| TXT   | mail.\_domainkey.lists | "v=DKIM1;k=rsa;p=..."                             |
+| TXT   | mail.\_domainkey       | "v=DKIM1;k=rsa;p=..."                             |
+| TXT	  | \_dmarc.lists          | "v=DMARC1;p=reject;pct=100;rua=MAIL"              |
+| TXT	  | \_dmarc                | "v=DMARC1;p=reject;pct=100;rua=MAIL"              |
