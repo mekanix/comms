@@ -51,9 +51,11 @@ Visit https://mail.mydomain.com?admin and use admin/12345 as user/pass.
 | CNAME | mail                   | comms.example.com                                 |
 | SRV   | \_xmpp-client.\_tcp    | 0 5222 comms.example.com                          |
 | SRV   | \_xmpp-server.\_tcp    | 0 5269 comms.example.com                          |
-| TXT	  | lists                  | "v=spf1 mx ip4:IP include:lists.example.com -all" |
+| TXT   | lists                  | "v=spf1 mx ip4:IP include:lists.example.com -all" |
 | TXT   |                        | "v=spf1 mx ip4:IP include:example.com -all"       |
 | TXT   | mail.\_domainkey.lists | "v=DKIM1;k=rsa;p=..."                             |
 | TXT   | mail.\_domainkey       | "v=DKIM1;k=rsa;p=..."                             |
-| TXT	  | \_dmarc.lists          | "v=DMARC1;p=reject;pct=100;rua=MAIL"              |
-| TXT	  | \_dmarc                | "v=DMARC1;p=reject;pct=100;rua=MAIL"              |
+| TXT   | \_dmarc.lists          | "v=DMARC1;p=reject;pct=100;rua=MAIL"              |
+| TXT   | \_dmarc                | "v=DMARC1;p=reject;pct=100;rua=MAIL"              |
+| MX    | lists                  | comms.example.com                                 |
+| MX    |                        | comms.example.com                                 |
