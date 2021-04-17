@@ -1,20 +1,21 @@
 REGGAE_PATH = /usr/local/share/reggae
 FQDN ?= example.com
-SERVICES = letsencrypt https://github.com/mekanix/jail-letsencrypt \
-	   ldap https://github.com/mekanix/jail-ldap \
-	   mail https://github.com/mekanix/jail-mail \
-	   coturn https://github.com/mekanix/jail-coturn \
-	   jabber https://github.com/mekanix/jail-jabber \
-	   znc https://github.com/mekanix/jail-znc \
-	   webmail https://github.com/mekanix/jail-webmail \
-	   nginx https://github.com/mekanix/jail-nginx
+
+SERVICES += letsencrypt https://github.com/mekanix/jail-letsencrypt
+SERVICES += ldap https://github.com/mekanix/jail-ldap
+SERVICES += mail https://github.com/mekanix/jail-mail
+SERVICES += coturn https://github.com/mekanix/jail-coturn
+SERVICES += jabber https://github.com/mekanix/jail-jabber
+SERVICES += znc https://github.com/mekanix/jail-znc
+SERVICES += webmail https://github.com/mekanix/jail-webmail
+SERVICES += nginx https://github.com/mekanix/jail-nginx
 
 post_setup:
 .for service url in ${SERVICES}
 	@echo "FQDN = ${FQDN}" >>services/${service}/project.mk
 .endfor
-	@echo "/usr/cbsd/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/coturn/templates/fstab
 	@echo "/usr/cbsd/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/ldap/templates/fstab
+	@echo "/usr/cbsd/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/coturn/templates/fstab
 	@echo "/usr/cbsd/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/nginx/templates/fstab
 	@echo "/usr/cbsd/jails-data/webmail-data/usr/local/www/rainloop /usr/local/www/rainloop nullfs rw 0 0" >>services/nginx/templates/fstab
 	@echo "/usr/cbsd/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/mail/templates/fstab
