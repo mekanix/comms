@@ -17,10 +17,10 @@ logout
 make
 ```
 
-LDAP data based on `services/mail/ldap`.
+LDAP data based on `services/ldap/examples`.
 
 ```
-sudo cp -r services/mail/ldap /usr/cbsd/jails-data/ldap-data/root/
+sudo cp -r services/ldap/examples /usr/cbsd/jails-data/ldap-data/root/ldap
 make login service=ldap
 sed -e 's/DOMAIN/mydomain.com/g' ldap/domain.ldif >mydomain.com.ldif
 sed -e 's/DOMAIN/mydomain.com/g' -e 's/USER/beastie/g' -e 's/FIRST/Bea/g' -e 's/LAST/Stie/g' ldap/user.ldif >beastie@mydomain.com.ldif
