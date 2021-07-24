@@ -1,5 +1,6 @@
 # FreeBSD / CBSD / Reggae based mail server
 
+## Building / Configuring Services
 
 ```
 echo 'FQDN = mydomain.com' >>vars.mk
@@ -8,13 +9,13 @@ make login service=letsencrypt
 ```
 
 Edit /usr/local/etc/letsencrypt_domains.txt. You'll aready have an example as
-Ansible will create that file only if it doesn't exist, and poppulate it with
+Ansible will create that file only if it doesn't exist and poppulate it with
 fake data.
 
 ```
 letsencrypt_update.sh
 logout
-make
+make service=ldap
 ```
 
 LDAP data based on `services/ldap/examples`.
@@ -30,6 +31,12 @@ ldapadd -W -D cn=root,dc=ldap -f beastie@mydomain.com.ldif
 ldappasswd -W -D cn=root,dc=ldap uid=beastie,ou=mydomain.com,dc=ldap
 ```
 
+Build all other services:
+```
+make
+```
+**Don't forget to configure cron to run `bin/cron.sh`!**
+
 If you want to test it on your local machine, run this as root:
 
 ```
@@ -41,10 +48,10 @@ echo `cbsd jget jname=nginx ip4_addr | cut -f 2 -d ' '` mail.mydomain.com >>/etc
 Visit https://mail.mydomain.com?admin and use admin/12345 as user/pass.
 
 ## DNS Setup
-| Type  | Record                 | Value                                             |
+
+| Type  | Record                 | Value                                              |
 |------:|:----------------------:|:---------------------------------------------------|
 | A     | comms                  | IP                                                 |
-| CNAME | lists                  | comms.mydomain.com                                 |
 | CNAME | smtp                   | comms.mydomain.com                                 |
 | CNAME | imap                   | comms.mydomain.com                                 |
 | CNAME | conference             | comms.mydomain.com                                 |
@@ -59,11 +66,14 @@ Visit https://mail.mydomain.com?admin and use admin/12345 as user/pass.
 | SRV   | \_turns.\_udp          | 0 5349 comms.mydomain.com                          |
 | SRV   | \_xmpp-client.\_tcp    | 0 5222 comms.mydomain.com                          |
 | SRV   | \_xmpp-server.\_tcp    | 0 5269 comms.mydomain.com                          |
-| TXT   | lists                  | "v=spf1 mx ip4:IP include:lists.mydomain.com -all" |
 | TXT   |                        | "v=spf1 mx ip4:IP include:mydomain.com -all"       |
-| TXT   | mail.\_domainkey.lists | "v=DKIM1;k=rsa;p=..."                              |
 | TXT   | mail.\_domainkey       | "v=DKIM1;k=rsa;p=..."                              |
-| TXT   | \_dmarc.lists          | "v=DMARC1;p=reject;pct=100;rua=MAIL"               |
 | TXT   | \_dmarc                | "v=DMARC1;p=reject;pct=100;rua=MAIL"               |
-| MX    | lists                  | comms.mydomain.com                                 |
 | MX    |                        | comms.mydomain.com                                 |
+
+
+## Per service/jail documentation
+
+* [LDAP](https://github.com/mekanix/jail-ldap)
+* [Mail](https://github.com/mekanix/jail-mail)
+* [Jabber](https://github.com/mekanix/jail-jabber)
