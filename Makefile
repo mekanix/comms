@@ -1,6 +1,6 @@
 REGGAE_PATH = /usr/local/share/reggae
 FQDN ?= example.com
-USE = letsencrypt ldap redis mail coturn jabber znc webmail nginx
+USE = letsencrypt ldap redis mail turn jabber znc webmail nginx
 .include <${REGGAE_PATH}/mk/use.mk>
 
 post_setup:
@@ -8,7 +8,7 @@ post_setup:
 	@echo "FQDN = ${FQDN}" >>services/${service}/project.mk
 .endfor
 	@echo "/usr/cbsd/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/ldap/templates/fstab
-	@echo "/usr/cbsd/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/coturn/templates/fstab
+	@echo "/usr/cbsd/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/turn/templates/fstab
 	@echo "/usr/cbsd/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/nginx/templates/fstab
 	@echo "/usr/cbsd/jails-data/webmail-data/usr/local/www/rainloop /usr/local/www/rainloop nullfs rw 0 0" >>services/nginx/templates/fstab
 	@echo "/usr/cbsd/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/mail/templates/fstab
