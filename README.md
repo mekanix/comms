@@ -51,7 +51,8 @@ Visit https://mail.mydomain.com?admin and use admin/12345 as user/pass.
 
 | Type  | Record                 | Value                                                         |
 |------:|:----------------------:|:--------------------------------------------------------------|
-| A     | comms                  | IP                                                            |
+| A     | comms                  | IPv4                                                          |
+| AAAA  | comms                  | IPv6                                                          |
 | CNAME | smtp                   | comms.mydomain.com                                            |
 | CNAME | imap                   | comms.mydomain.com                                            |
 | CNAME | conference             | comms.mydomain.com                                            |
