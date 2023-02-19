@@ -15,13 +15,31 @@ fake data.
 ```
 letsencrypt_update.sh
 logout
+```
+
+Next, create LDAP jail.
+```
 make service=ldap
 ```
 
-LDAP data based on `services/ldap/examples`.
+If your jail is already accessible at `ldap.mydomain.com` (depends on your DHCP
+and DNS setup), no action is needed in order to start using it, but if its FQDN
+is something like `ldap.mymachine.mydomain.com` you can enter fake DNS entries
+to make it work locally. In `services/ldap` directory run:
+```
+make fake_dns
 
 ```
-sudo cp -r services/ldap/examples /usr/cbsd/jails-data/ldap-data/root/ldap
+
+If you want to remove the fake DNS entries later run:
+```
+make unfake_dns
+```
+
+Load LDAP data based on `services/ldap/examples`.
+
+```
+sudo cp -r services/ldap/examples $(jls -j ldap path)/root/ldap
 make login service=ldap
 sed -e 's/DOMAIN/mydomain.com/g' ldap/domain.ldif >mydomain.com.ldif
 sed -e 's/DOMAIN/mydomain.com/g' -e 's/USER/beastie/g' -e 's/FIRST/Bea/g' -e 's/LAST/Stie/g' ldap/user.ldif >beastie@mydomain.com.ldif
@@ -36,14 +54,6 @@ Build all other services:
 make
 ```
 **Don't forget to configure cron to run `bin/cron.sh`!**
-
-If you want to test it on your local machine, run this as root:
-
-```
-echo `cbsd jget jname=mail ip4_addr | cut -f 2 -d ' '` imap.mydomain.com smtp.mydomain.com >>/etc/hosts
-echo `cbsd jget jname=jabber ip4_addr | cut -f 2 -d ' '` mydomain.com >>/etc/hosts
-echo `cbsd jget jname=nginx ip4_addr | cut -f 2 -d ' '` mail.mydomain.com >>/etc/hosts
-```
 
 Visit https://mail.mydomain.com?admin and use admin/12345 as user/pass.
 
