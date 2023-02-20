@@ -10,6 +10,9 @@ CBSD_WORKDIR != sysrc -s cbsd -n cbsd_workdir
 post_setup:
 .for service url in ${ALL_SERVICES}
 	@echo "FQDN = ${FQDN}" >>services/${service}/project.mk
+.if defined(VERSION)
+	@echo "VERSION = ${FQDN}" >>services/${service}/project.mk
+.endif
 .endfor
 .if ${BACKEND} == base
 	@echo "${BASE_WORKDIR}/letsencrypt/usr/local/etc/dehydrated/certs \$${path}/etc/certs nullfs rw 0 0" >services/ldap/templates/fstab
