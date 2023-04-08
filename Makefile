@@ -4,11 +4,12 @@ USE = letsencrypt ldap redis mail turn jabber znc webmail nginx
 .include <${REGGAE_PATH}/mk/use.mk>
 
 BACKEND != reggae get-config BACKEND
-CBSD_WORKDIR != sysrc -s cbsd -n cbsd_workdir
+CBSD_WORKDIR != sysrc -s cbsd -n cbsd_workdir 2>/dev/null || true
 
 post_setup:
 .for service url in ${ALL_SERVICES}
 	@echo "FQDN = ${FQDN}" >>services/${service}/project.mk
+	@echo "DHCP ?= ${DHCP}" >>services/${service}/project.mk
 .if defined(VERSION)
 	@echo "VERSION = ${FQDN}" >>services/${service}/project.mk
 .endif
