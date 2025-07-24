@@ -1,6 +1,6 @@
 REGGAE_PATH = /usr/local/share/reggae
 FQDN ?= example.com
-USE = letsencrypt ldap redis mail ejabberd znc webmail nginx
+USE = letsencrypt ldap redis mail ejabberd znc webmail radicale nginx
 .include <${REGGAE_PATH}/mk/use.mk>
 
 BACKEND != reggae get-config BACKEND
