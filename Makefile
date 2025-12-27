@@ -1,6 +1,6 @@
 REGGAE_PATH = /usr/local/share/reggae
 FQDN ?= example.com
-USE = letsencrypt ldap redis rspamd cyrus postfix ejabberd znc webmail radicale nginx
+USE = letsencrypt ldap redis rspamd cyrus postfix ejabberd znc webmail radicale haproxy
 .include <${REGGAE_PATH}/mk/use.mk>
 
 BACKEND != reggae get-config BACKEND
@@ -16,15 +16,15 @@ post_setup:
 .endfor
 .if ${BACKEND} == base
 	@echo "\$${base}/letsencrypt/usr/local/etc/dehydrated/certs \$${path}/etc/certs nullfs rw 0 0" >services/ldap/templates/fstab
-	@echo "\$${base}/letsencrypt/usr/local/etc/dehydrated/certs \$${path}/etc/certs nullfs rw 0 0" >services/nginx/templates/fstab
-	@echo "\$${base}/webmail/usr/local/www/snappymail \$${path}/usr/local/www/snappymail nullfs rw 0 0" >>services/nginx/templates/fstab
+	@echo "\$${base}/letsencrypt/usr/local/etc/dehydrated/certs \$${path}/etc/certs nullfs rw 0 0" >services/haproxy/templates/fstab
+	@echo "\$${base}/webmail/usr/local/www/snappymail \$${path}/usr/local/www/snappymail nullfs rw 0 0" >>services/haproxy/templates/fstab
 	@echo "\$${base}/letsencrypt/usr/local/etc/dehydrated/certs \$${path}/etc/certs nullfs rw 0 0" >services/cyrus/templates/fstab
 	@echo "\$${base}/letsencrypt/usr/local/etc/dehydrated/certs \$${path}/etc/certs nullfs rw 0 0" >services/postfix/templates/fstab
 	@echo "\$${base}/letsencrypt/usr/local/etc/dehydrated/certs \$${path}/etc/certs nullfs rw 0 0" >services/ejabberd/templates/fstab
 .elif ${BACKEND} == cbsd
 	@echo "${CBSD_WORKDIR}/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/ldap/templates/fstab
-	@echo "${CBSD_WORKDIR}/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/nginx/templates/fstab
-	@echo "${CBSD_WORKDIR}/jails-data/webmail-data/usr/local/www/snappymail /usr/local/www/snappymail nullfs rw 0 0" >>services/nginx/templates/fstab
+	@echo "${CBSD_WORKDIR}/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/haproxy/templates/fstab
+	@echo "${CBSD_WORKDIR}/jails-data/webmail-data/usr/local/www/snappymail /usr/local/www/snappymail nullfs rw 0 0" >>services/haproxy/templates/fstab
 	@echo "${CBSD_WORKDIR}/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/mail/templates/fstab
 	@echo "${CBSD_WORKDIR}/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/cyrus/templates/fstab
 	@echo "${CBSD_WORKDIR}/jails-data/letsencrypt-data/usr/local/etc/dehydrated/certs /etc/certs nullfs rw 0 0" >services/postfix/templates/fstab
